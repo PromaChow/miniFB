@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import "./Authentication.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
@@ -6,18 +6,32 @@ import "jquery/dist/jquery.min.js";
 import $ from "jquery";
 import axios from "axios";
 
-const Authentication = () => {
+const Authentication = React.memo(() => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  //   const reg_email = useRef("");
+  //   const reg_password = useRef("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
   const [reg_email, setRegEmail] = useState("");
   const [reg_password, setRegPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [checked, setChecked] = useState(true);
 
-  const isNull = () => {
-    if (reg_email !== "" || reg_password !== "")
-      $(".login-show").removeClass("show-log-panel");
-  };
+  const onChangeEmail = useCallback(
+    (e) => {
+      console.log("hott");
+      setRegEmail(e.target.value);
+      console.log(reg_email);
+    },
+    [reg_email]
+  );
+
+  const onChangePassword = useCallback(
+    (e) => {
+      setRegPassword(e.target.value);
+    },
+    [reg_password]
+  );
 
   useEffect(() => {
     //animation code
@@ -25,27 +39,27 @@ const Authentication = () => {
       $(".login-info-box").fadeOut();
       $(".login-show").addClass("show-log-panel");
 
-      isNull();
+      $('input[type="radio"]').on("change", function () {
+        if ($("#log-reg-show").is(":checked")) {
+          $(".register-info-box").fadeIn();
+          $(".login-info-box").fadeOut();
 
-      if ($("#log-reg-show").is(":checked")) {
-        $(".register-info-box").fadeIn();
-        $(".login-info-box").fadeOut();
+          $(".white-panel").removeClass("right-log");
 
-        $(".white-panel").removeClass("right-log");
+          $(".login-show").addClass("show-log-panel");
+          $(".register-show").removeClass("show-log-panel");
+        }
+        if ($("#log-login-show").is(":checked")) {
+          $(".register-info-box").fadeOut();
+          $(".login-info-box").fadeIn();
 
-        $(".login-show").addClass("show-log-panel");
-        $(".register-show").removeClass("show-log-panel");
-      }
-      if ($("#log-login-show").is(":checked")) {
-        $(".register-info-box").fadeOut();
-        $(".login-info-box").fadeIn();
-
-        $(".white-panel").addClass("right-log");
-        $(".register-show").addClass("show-log-panel");
-        $(".login-show").removeClass("show-log-panel");
-      }
+          $(".white-panel").addClass("right-log");
+          $(".register-show").addClass("show-log-panel");
+          $(".login-show").removeClass("show-log-panel");
+        }
+      });
     });
-  }, [isNull]);
+  }, []);
   const onLogin = async (evt) => {
     console.log("pressed");
     if (evt) {
@@ -78,15 +92,15 @@ const Authentication = () => {
     }
   };
 
-  const onRegisterEmailChange = (e) => {
-    setRegEmail(e);
-  };
+  //   const onRegisterEmailChange = (e) => {
+  //     setRegEmail(e);
+  //   };
 
   const onRegister = (evt) => {
     evt.preventDefault();
     const data = {
-      email: email,
-      password: password,
+      email: reg_email,
+      password: reg_password,
     };
     axios
       .post("http://127.0.0.1:8000/register", data)
@@ -124,7 +138,6 @@ const Authentication = () => {
           name="active-log-panel"
           value="log-login-show"
           id="log-login-show"
-          onClick={setChecked(false)}
         />
       </div>
 
@@ -150,14 +163,23 @@ const Authentication = () => {
           <input
             type="text"
             placeholder="Email"
-            onChange={(e) => onRegisterEmailChange(e)}
+            onChange={(e) => {
+              onChangeEmail(e);
+            }}
           />
-          <input type="password" placeholder="Password" required />
+          <input
+            type="password"
+            placeholder="Password"
+            onChange={(e) => {
+              onChangePassword(e);
+            }}
+            required
+          />
           <input type="password" placeholder="Confirm Password" required />
           <input type="button" value="Register" onClick={onRegister} />
         </div>
       </div>
     </div>
   );
-};
+});
 export default Authentication;
