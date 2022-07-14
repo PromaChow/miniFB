@@ -20,6 +20,7 @@ const Authentication = React.memo(({ dummy }) => {
 
   const [reg_email, setRegEmail] = useState("");
   const [reg_password, setRegPassword] = useState("");
+  const [data, setData] = useState("p");
 
   const onChangeEmail = useCallback(
     (e) => {
@@ -88,6 +89,9 @@ const Authentication = React.memo(({ dummy }) => {
           alert("yes");
           console.log("response", response);
           Cookies.set("token", response.data.access_token);
+          Cookies.set("username", response.data.username);
+          Cookies.set("id", response.data.id);
+
           return response;
         })
         .catch((error) => {
@@ -96,9 +100,13 @@ const Authentication = React.memo(({ dummy }) => {
       return res;
     };
     let x = await news();
+    setData(x);
     if (x) {
       window.location.reload();
     }
+    console.log(data);
+
+    return x;
   };
 
   //   const onRegisterEmailChange = (e) => {
@@ -166,7 +174,15 @@ const Authentication = React.memo(({ dummy }) => {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            <input type="button" value="Login" onClick={onLogin} />
+            <input
+              type="button"
+              value="Login"
+              onClick={async () => {
+                const tok = await onLogin();
+                setData(tok);
+                console.log(tok);
+              }}
+            />
           </div>
           <div class="register-show">
             <h2>REGISTER</h2>
@@ -192,7 +208,7 @@ const Authentication = React.memo(({ dummy }) => {
       </div>
     );
   } else {
-    return <Home></Home>;
+    return <Home data={data}></Home>;
   }
 });
 export default Authentication;

@@ -31,9 +31,9 @@ const customStyles = {
   },
 };
 
-function Home({}) {
+function Home({ data }) {
   const [isOpen, setIsOpen] = useState(false);
-
+  console.log(data);
   function toggleModal() {
     setIsOpen(!isOpen);
   }
@@ -45,6 +45,7 @@ function Home({}) {
 
   useEffect(() => {
     console.log("home", Cookies.get("token"));
+    console.log("home", Cookies.get("id"));
   }, []);
 
   return (
@@ -122,7 +123,7 @@ function Home({}) {
               </Avatar>
             }
             title="Shrimp and Chorizo Paella"
-            subheader="September 14, 2016"
+            subheader={Date.now()}
           />
           <CardContent>
             <Typography variant="body2" color="text.secondary">
