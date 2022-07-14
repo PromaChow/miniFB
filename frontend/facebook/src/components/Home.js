@@ -18,6 +18,11 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { borderColor } from "@mui/system";
 import Cookies from "js-cookie";
+import {
+  format_time,
+  addStatus,
+  getStatus,
+} from "../helperFiles/helperFunctions";
 Modal.setAppElement("#root");
 
 const customStyles = {
@@ -33,6 +38,7 @@ const customStyles = {
 
 function Home({ data }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [stat, setStat] = useState("");
   console.log(data);
   function toggleModal() {
     setIsOpen(!isOpen);
@@ -41,12 +47,50 @@ function Home({ data }) {
 
   const handleChange = useCallback((e) => {
     console.log("Changed value to: ", e.target.value);
+    setStat(e.target.value);
   }, []);
-
+  var indents = [];
   useEffect(() => {
     console.log("home", Cookies.get("token"));
     console.log("home", Cookies.get("id"));
+    console.log(getStatus().length);
   }, []);
+
+  const add_status = (text) => {
+    console.log("t", text);
+    addStatus(text);
+    const status = getStatus();
+    console.log(status);
+
+    for (var i = 0; i < status.length; i++) {
+      indents.push(
+        <Card
+          style={{
+            width: "100%",
+            borderTop: "9px solid black",
+            borderRadius: "30px",
+            marginTop: "10px",
+          }}
+        >
+          <CardHeader
+            avatar={
+              <Avatar sx={{ bgcolor: " #c884dc" }} aria-label="recipe">
+                {Cookies.get("username")[0]}
+              </Avatar>
+            }
+            title={Cookies.get("username")}
+            subheader={format_time(Date.now())}
+          />
+          <CardContent>
+            <Typography variant="body2" color="text.secondary">
+              {status[i]}
+            </Typography>
+          </CardContent>
+        </Card>
+      );
+    }
+    console.log(indents.length);
+  };
 
   return (
     <div>
@@ -89,7 +133,15 @@ function Home({ data }) {
           class="center"
         ></Textarea>
 
-        <button class="button-style">POST</button>
+        <button
+          class="button-style"
+          onClick={() => {
+            add_status(stat);
+            window.location.reload();
+          }}
+        >
+          POST
+        </button>
       </div>
 
       <div
@@ -108,7 +160,7 @@ function Home({ data }) {
           flexGrow: 1,
         }}
       >
-        <Card
+        {/* <Card
           style={{
             width: "100%",
             borderTop: "9px solid black",
@@ -132,7 +184,8 @@ function Home({ data }) {
               with the mussels, if you like.
             </Typography>
           </CardContent>
-        </Card>
+        </Card> */}
+        {indents}
       </div>
     </div>
   );

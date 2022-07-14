@@ -11,7 +11,7 @@ import json
 app = FastAPI()
 import motor.motor_asyncio
 import asyncio
-from model import User,Login
+from model import User,Login, Status
 
 import pymongo
 print(pymongo.version)
@@ -83,6 +83,14 @@ async def get_status():
           
     print(list)
     return {"list":list}
+
+
+@app.post("/status")
+def post_status(request : Status):
+    stat_obj = dict(request)
+    stat_col.insert_one(stat_obj)
+    
+    return {"res" : "success"}
     
 
 @app.get("/")

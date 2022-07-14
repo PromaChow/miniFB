@@ -20,3 +20,10 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     username: Optional[str] = None
+    
+    
+class Status(BaseModel):
+    id : str
+    name : str
+    time : str
+    text: str

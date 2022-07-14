@@ -7,6 +7,11 @@ import $ from "jquery";
 import axios from "axios";
 import Cookies from "js-cookie";
 import Home from "./Home";
+import {
+  format_time,
+  addStatus,
+  getStatus,
+} from "../helperFiles/helperFunctions";
 
 const Authentication = React.memo(({ dummy }) => {
   const [email, setEmail] = useState("");
@@ -70,6 +75,7 @@ const Authentication = React.memo(({ dummy }) => {
       });
     });
   }, []);
+
   const onLogin = async (evt) => {
     console.log("pressed");
     if (evt) {
