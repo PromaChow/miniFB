@@ -1,12 +1,8 @@
 import logo from "./logo.svg";
 import Authentication from "./components/Authentication";
+import Home from "./components/Home";
 
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Navigate } from "react-router-dom";
 
 function App() {
   return (
@@ -35,6 +31,7 @@ function App() {
     //     </Navigate>
     //   </div>
     // </Router>
+    //<Authentication dummy={Math.random()}></Authentication>
     <Authentication></Authentication>
   );
 }

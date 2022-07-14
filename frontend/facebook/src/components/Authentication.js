@@ -5,10 +5,14 @@ import "bootstrap/dist/js/bootstrap.min.js";
 import "jquery/dist/jquery.min.js";
 import $ from "jquery";
 import axios from "axios";
+import Cookies from "js-cookie";
+import Home from "./Home";
 
-const Authentication = React.memo(() => {
+const Authentication = React.memo(({ dummy }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [cookies, setCookies] = useState(false);
+  //console.log(dummy);
 
   //   const reg_email = useRef("");
   //   const reg_password = useRef("");
@@ -34,6 +38,11 @@ const Authentication = React.memo(() => {
   );
 
   useEffect(() => {
+    const token = Cookies.get("token");
+    if (token) {
+      setCookies(true);
+      console.log(token);
+    }
     //animation code
     $(document).ready(function () {
       $(".login-info-box").fadeOut();
@@ -78,7 +87,7 @@ const Authentication = React.memo(() => {
         .then((response) => {
           alert("yes");
           console.log("response", response);
-          // Cookies.set("token", response.data.access_token);
+          Cookies.set("token", response.data.access_token);
           return response;
         })
         .catch((error) => {
@@ -113,73 +122,77 @@ const Authentication = React.memo(() => {
       });
   };
 
-  return (
-    <div class="login-reg-panel">
-      <div class="login-info-box">
-        <h2>Have an account?</h2>
-        <label id="label-register" for="log-reg-show">
-          Login
-        </label>
-        <input
-          type="radio"
-          name="active-log-panel"
-          id="log-reg-show"
-          value="log-reg-show"
-        />
-      </div>
-
-      <div class="register-info-box">
-        <h2>Don't have an account?</h2>
-        <label id="label-login" for="log-login-show">
-          Register
-        </label>
-        <input
-          type="radio"
-          name="active-log-panel"
-          value="log-login-show"
-          id="log-login-show"
-        />
-      </div>
-
-      <div class="white-panel">
-        <div class="login-show">
-          <h2>LOGIN</h2>
+  if (!cookies) {
+    return (
+      <div class="login-reg-panel">
+        <div class="login-info-box">
+          <h2>Have an account?</h2>
+          <label id="label-register" for="log-reg-show">
+            Login
+          </label>
           <input
-            type="text"
-            placeholder="Email"
-            onChange={(e) => setEmail(e.target.value)}
-            required
+            type="radio"
+            name="active-log-panel"
+            id="log-reg-show"
+            value="log-reg-show"
           />
-          <input
-            type="password"
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <input type="button" value="Login" onClick={onLogin} />
         </div>
-        <div class="register-show">
-          <h2>REGISTER</h2>
+
+        <div class="register-info-box">
+          <h2>Don't have an account?</h2>
+          <label id="label-login" for="log-login-show">
+            Register
+          </label>
           <input
-            type="text"
-            placeholder="Email"
-            onChange={(e) => {
-              onChangeEmail(e);
-            }}
+            type="radio"
+            name="active-log-panel"
+            value="log-login-show"
+            id="log-login-show"
           />
-          <input
-            type="password"
-            placeholder="Password"
-            onChange={(e) => {
-              onChangePassword(e);
-            }}
-            required
-          />
-          <input type="password" placeholder="Confirm Password" required />
-          <input type="button" value="Register" onClick={onRegister} />
+        </div>
+
+        <div class="white-panel">
+          <div class="login-show">
+            <h2>LOGIN</h2>
+            <input
+              type="text"
+              placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <input type="button" value="Login" onClick={onLogin} />
+          </div>
+          <div class="register-show">
+            <h2>REGISTER</h2>
+            <input
+              type="text"
+              placeholder="Email"
+              onChange={(e) => {
+                onChangeEmail(e);
+              }}
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              onChange={(e) => {
+                onChangePassword(e);
+              }}
+              required
+            />
+            <input type="password" placeholder="Confirm Password" required />
+            <input type="button" value="Register" onClick={onRegister} />
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return <Home></Home>;
+  }
 });
 export default Authentication;
