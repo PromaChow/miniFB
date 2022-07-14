@@ -36,14 +36,19 @@ const customStyles = {
   },
 };
 
-function Home({ data }) {
+function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [stat, setStat] = useState("");
-  console.log(data);
+  const [id, setId] = useState();
+  const [name, setName] = useState("");
+  const [data, setData] = useState([]);
+  const [ind, setInd] = useState([]);
+  //console.log(data);
   function toggleModal() {
     setIsOpen(!isOpen);
   }
   const textareaRef = useRef();
+  var arr = [];
 
   const handleChange = useCallback((e) => {
     console.log("Changed value to: ", e.target.value);
@@ -51,18 +56,27 @@ function Home({ data }) {
   }, []);
   var indents = [];
   useEffect(() => {
-    console.log("home", Cookies.get("token"));
-    console.log("home", Cookies.get("id"));
-    console.log(getStatus().length);
+    indents = [];
+    const pullStatus = () => {
+      getStatus().then((dat) => {
+        arr = [];
+        arr = dat["data"]["list"];
+        console.log(arr);
+        console.log("data", arr.length);
+        add_status(arr);
+      });
+    };
+    setName(Cookies.get("username"));
+    setId(Cookies.get("id"));
+    pullStatus();
+
+    //console.log(getStatus());
   }, []);
 
-  const add_status = (text) => {
-    console.log("t", text);
-    addStatus(text);
-    const status = getStatus();
-    console.log(status);
-
-    for (var i = 0; i < status.length; i++) {
+  const add_status = () => {
+    console.log(arr.length);
+    indents = [];
+    for (var i = 0; i < arr.length; i++) {
       indents.push(
         <Card
           style={{
@@ -75,21 +89,22 @@ function Home({ data }) {
           <CardHeader
             avatar={
               <Avatar sx={{ bgcolor: " #c884dc" }} aria-label="recipe">
-                {Cookies.get("username")[0]}
+                {arr[i]["name"][0]}
               </Avatar>
             }
-            title={Cookies.get("username")}
-            subheader={format_time(Date.now())}
+            title={arr[i]["name"]}
+            subheader={format_time(arr[i]["time"])}
           />
           <CardContent>
             <Typography variant="body2" color="text.secondary">
-              {status[i]}
+              {arr[i]["text"]}
             </Typography>
           </CardContent>
         </Card>
       );
     }
-    console.log(indents.length);
+    console.log("indents", indents.length, arr.length);
+    setInd(indents);
   };
 
   return (
@@ -136,7 +151,7 @@ function Home({ data }) {
         <button
           class="button-style"
           onClick={() => {
-            add_status(stat);
+            addStatus(id, name, String(Date.now()), stat);
             window.location.reload();
           }}
         >
@@ -185,7 +200,7 @@ function Home({ data }) {
             </Typography>
           </CardContent>
         </Card> */}
-        {indents}
+        {ind}
       </div>
     </div>
   );
