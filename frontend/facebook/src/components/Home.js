@@ -159,22 +159,29 @@ function Home() {
           POST
         </button>
       </div>
-      <div class="div-center">
+
+      <div class="div-center_2">
+        <div class="image-upload">
+          <label for="file-input">
+            <img
+              src={require("./index.png")}
+              alt="new"
+              style={{
+                borderRadius: "99px",
+                height: "80px",
+                width: "80px",
+                margin: "10px",
+              }}
+            />
+          </label>
+
+          <input id="file-input" type="file" />
+        </div>
+
         <img
           src="http://127.0.0.1:9000/images/test.png"
           alt="new"
           style={{
-            margin: "10px",
-            borderRadius: "95px",
-            height: "90px",
-            width: "100px",
-          }}
-        />
-        <img
-          src="http://127.0.0.1:9000/images/test.png"
-          alt="new"
-          style={{
-            margin: "10px",
             borderRadius: "95px",
             height: "90px",
             width: "100px",

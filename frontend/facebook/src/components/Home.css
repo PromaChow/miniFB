@@ -63,6 +63,31 @@ justify-content:space-between;
        
     
   }
+  .div-center_2 {
+    margin: auto;
+    margin-top: 10px;
+    border: 0.001px solid rgb(134, 136, 134);
+    background-color: #312b32;
+    border-radius: 10px;
+    opacity: 1;
+    width: "900px";
+    display: flex;
+    flex-direction: column;
+    box-shadow: #18031e;
+    overflow-x: scroll;
+    display: flex;
+    flex-direction: row;
+       
+    
+  }
+
+  .image-upload > input
+{
+    display: none;
+    border-radius: "95px";
+    height: "90px";
+    width: "100px";
+}
   .button-style{
       width:10%;
       
