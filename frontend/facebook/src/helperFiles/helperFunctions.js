@@ -58,6 +58,31 @@ export const addStatus = async (id, name, time, stat) => {
     });
 };
 
+export const addStory = async (id, name, time, img) => {
+  //status.splice(status.length, 0, stat);
+
+  const data = {
+    id: id,
+    name: name,
+    time: time,
+    img: img,
+  };
+  let res = await axios
+    .post("http://127.0.0.1:8000/stories", data)
+    .then((response) => {
+      // alert("yes");
+      // console.log("response", response);
+      // Cookies.set("token", response.data.access_token);
+      // Cookies.set("username", response.data.username);
+      // Cookies.set("id", response.data.id);
+
+      return response;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
+};
+
 export const getStatus = () => {
   const res = axios
     .get("http://127.0.0.1:8000/status")
@@ -76,4 +101,13 @@ export const getStatus = () => {
     });
 
   return res;
+};
+
+export const getBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
 };

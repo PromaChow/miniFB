@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional
+import uuid
 
 
 class User(BaseModel):
@@ -27,3 +28,10 @@ class Status(BaseModel):
     name : str
     time : str
     text: str
+    
+    
+class Story(BaseModel):
+    id: str
+    name : str
+    time : str
+    img : str

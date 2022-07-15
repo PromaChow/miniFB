@@ -22,6 +22,8 @@ import {
   format_time,
   addStatus,
   getStatus,
+  getBase64,
+  addStory,
 } from "../helperFiles/helperFunctions";
 Modal.setAppElement("#root");
 
@@ -43,6 +45,8 @@ function Home() {
   const [name, setName] = useState("");
   const [data, setData] = useState([]);
   const [ind, setInd] = useState([]);
+  const [imgURL, setImgURL] = useState();
+  console.log("img", imgURL);
   //console.log(data);
   function toggleModal() {
     setIsOpen(!isOpen);
@@ -54,6 +58,23 @@ function Home() {
     console.log("Changed value to: ", e.target.value);
     setStat(e.target.value);
   }, []);
+
+  const toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+
+  const onImageChange = useCallback(async (e) => {
+    console.log(e.target.files[0]);
+    var file = e.target.files[0];
+    const img = await toBase64(file);
+    console.log(img);
+    addStory(id, name, String(Date.now()), img);
+  }, []);
+
   var indents = [];
   useEffect(() => {
     indents = [];
@@ -175,16 +196,17 @@ function Home() {
             />
           </label>
 
-          <input id="file-input" type="file" />
+          <input id="file-input" type="file" onChange={onImageChange} />
         </div>
 
         <img
           src="http://127.0.0.1:9000/images/test.png"
           alt="new"
           style={{
-            borderRadius: "95px",
-            height: "90px",
-            width: "100px",
+            borderRadius: "99px",
+            height: "80px",
+            width: "80px",
+            margin: "10px",
           }}
         />
       </div>

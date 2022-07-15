@@ -7,11 +7,13 @@ from fastapi.security import OAuth2PasswordRequestForm
 from model import User,Token,TokenData, Login
 import sys
 import json
+import uuid
+import base64
 
 app = FastAPI()
 import motor.motor_asyncio
 import asyncio
-from model import User,Login, Status
+from model import Story,User,Login, Status
 import objDatabase
 
 import pymongo
@@ -92,6 +94,18 @@ async def get_status():
 def post_status(request : Status):
     stat_obj = dict(request)
     stat_col.insert_one(stat_obj)
+    
+    return {"res" : "success"}
+
+
+@app.post("/stories")
+def post_status(request : Story):
+    stat_obj = dict(request)
+    #print(stat_obj)
+    img_data = stat_obj["img"]
+    print(img_data)
+    # with open("imageToSave.png", "wb") as fh:
+    #     fh.write(base64.decodebytes(img_data))
     
     return {"res" : "success"}
     
