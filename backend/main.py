@@ -12,9 +12,12 @@ app = FastAPI()
 import motor.motor_asyncio
 import asyncio
 from model import User,Login, Status
+import objDatabase
 
 import pymongo
 print(pymongo.version)
+
+    
 # Replace the uri string with your MongoDB deployment's connection string.
 conn_str = "mongodb://localhost:27017"
 # set a 5-second connection timeout
