@@ -137,6 +137,7 @@ function Home() {
           </a>
         </div>
       </div>
+
       <div class="div-center">
         <Textarea
           className="textarea"
@@ -158,7 +159,28 @@ function Home() {
           POST
         </button>
       </div>
-
+      <div class="div-center">
+        <img
+          src="http://127.0.0.1:9000/images/test.png"
+          alt="new"
+          style={{
+            margin: "10px",
+            borderRadius: "95px",
+            height: "90px",
+            width: "100px",
+          }}
+        />
+        <img
+          src="http://127.0.0.1:9000/images/test.png"
+          alt="new"
+          style={{
+            margin: "10px",
+            borderRadius: "95px",
+            height: "90px",
+            width: "100px",
+          }}
+        />
+      </div>
       <div
         style={{
           /*border: "0.001px solid rgb(134, 136, 134)",*/
