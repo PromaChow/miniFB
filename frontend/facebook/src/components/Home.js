@@ -72,13 +72,14 @@ function Home() {
 
   const onImageChange = useCallback(async (e) => {
     setImg(e.target.files[0]);
+    console.log(e.target.files[0].name);
     const formData2 = new FormData();
     console.log("hello");
     // console.log("img", img.name);
-    formData2.append("file", img);
+    formData2.append("filesss", e.target.files[0]);
 
     const headers = { "Content-Type": e.target.files[0].type };
-    axios
+    await axios
       .post("http://127.0.0.1:8000/stories", formData2, headers)
       .then(function (response) {
         console.log(response);
