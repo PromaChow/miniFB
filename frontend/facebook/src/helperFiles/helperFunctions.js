@@ -58,17 +58,17 @@ export const addStatus = async (id, name, time, stat) => {
     });
 };
 
-export const addStory = async (id, name, time, img) => {
+export const addStory = async (id, name, time, form) => {
   //status.splice(status.length, 0, stat);
 
   const data = {
     id: id,
     name: name,
     time: time,
-    img: img,
+    file: form,
   };
   let res = await axios
-    .post("http://127.0.0.1:8000/stories", data)
+    .post("http://127.0.0.1:8000/stories", form)
     .then((response) => {
       // alert("yes");
       // console.log("response", response);

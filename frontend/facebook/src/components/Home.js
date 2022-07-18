@@ -18,6 +18,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { borderColor } from "@mui/system";
 import Cookies from "js-cookie";
+import axios from "axios";
 import {
   format_time,
   addStatus,
@@ -25,6 +26,7 @@ import {
   getBase64,
   addStory,
 } from "../helperFiles/helperFunctions";
+import { FormLabel } from "@mui/material";
 Modal.setAppElement("#root");
 
 const customStyles = {
@@ -45,8 +47,9 @@ function Home() {
   const [name, setName] = useState("");
   const [data, setData] = useState([]);
   const [ind, setInd] = useState([]);
-  const [imgURL, setImgURL] = useState();
-  console.log("img", imgURL);
+  const [img, setImg] = useState();
+  console.log(id);
+  console.log(name);
   //console.log(data);
   function toggleModal() {
     setIsOpen(!isOpen);
@@ -68,11 +71,21 @@ function Home() {
     });
 
   const onImageChange = useCallback(async (e) => {
-    console.log(e.target.files[0]);
-    var file = e.target.files[0];
-    const img = await toBase64(file);
-    console.log(img);
-    addStory(id, name, String(Date.now()), img);
+    setImg(e.target.files[0]);
+    const formData2 = new FormData();
+    console.log("hello");
+    // console.log("img", img.name);
+    formData2.append("file", img);
+
+    const headers = { "Content-Type": e.target.files[0].type };
+    axios
+      .post("http://127.0.0.1:8000/stories", formData2, headers)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (response) {
+        console.log(response);
+      });
   }, []);
 
   var indents = [];
@@ -182,7 +195,7 @@ function Home() {
       </div>
 
       <div class="div-center_2">
-        <div class="image-upload">
+        <form class="image-upload">
           <label for="file-input">
             <img
               src={require("./index.png")}
@@ -197,7 +210,7 @@ function Home() {
           </label>
 
           <input id="file-input" type="file" onChange={onImageChange} />
-        </div>
+        </form>
 
         <img
           src="http://127.0.0.1:9000/images/test.png"

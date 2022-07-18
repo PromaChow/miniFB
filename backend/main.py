@@ -9,13 +9,14 @@ import sys
 import json
 import uuid
 import base64
+from fastapi import  File, UploadFile, Form
 
 app = FastAPI()
 import motor.motor_asyncio
 import asyncio
 from model import Story,User,Login, Status
 import objDatabase
-
+import re
 import pymongo
 print(pymongo.version)
 
@@ -99,15 +100,20 @@ def post_status(request : Status):
 
 
 @app.post("/stories")
-def post_status(request : Story):
-    stat_obj = dict(request)
+def post_story(file : UploadFile = File(...)):
+   # stat_obj = dict(request)
     #print(stat_obj)
-    img_data = stat_obj["img"]
-    print(img_data)
+    #img_data = stat_obj["file"]
+    
+    
+    print(file.filename);
+    
+    #print(img_data)
     # with open("imageToSave.png", "wb") as fh:
     #     fh.write(base64.decodebytes(img_data))
     
-    return {"res" : "success"}
+    
+    return {"filename": file.filename}
     
 
 @app.get("/")

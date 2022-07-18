@@ -1,6 +1,8 @@
+from asyncore import file_dispatcher
 from pydantic import BaseModel
 from typing import Optional
 import uuid
+from fastapi import FastAPI, File, UploadFile
 
 
 class User(BaseModel):
@@ -34,4 +36,4 @@ class Story(BaseModel):
     id: str
     name : str
     time : str
-    img : str
+    file : UploadFile= File(...)
