@@ -49,8 +49,6 @@ function Home() {
   const [ind, setInd] = useState([]);
   const [img, setImg] = useState();
   const [story, setStory] = useState([]);
-  console.log(id);
-  console.log(name);
   //console.log(data);
   function toggleModal() {
     setIsOpen(!isOpen);
@@ -87,18 +85,9 @@ function Home() {
 
     const headers = { "Content-Type": e.target.files[0].type };
     await axios
-      .post("http://127.0.0.1:8000/stories", formData2, headers)
-      .then(async function (response) {
-        console.log(response);
-      })
-      .catch(function (response) {
-        console.log(response);
-      });
-
-    await axios
       .post("http://127.0.0.1:8000/storiesAdditional", {
-        id: id,
-        name: name,
+        id: Cookies.get("id"),
+        name: Cookies.get("username"),
         time: String(Date.now()),
       })
       .then((response) => {
@@ -113,33 +102,43 @@ function Home() {
       .catch((error) => {
         console.log(error.message);
       });
+
+    await axios
+      .post("http://127.0.0.1:8000/stories", formData2, headers)
+      .then(async function (response) {
+        console.log(response);
+      })
+      .catch(function (response) {
+        console.log(response);
+      });
   }, []);
+  const pullStatus = () => {
+    getStatus().then((dat) => {
+      arr = [];
+      arr = dat["data"]["list"];
+      console.log(arr);
+      console.log("data", arr.length);
+      add_status(arr);
+    });
+  };
+  const pullStory = () => {
+    getStory().then((dat) => {
+      arr = [];
+      arr = dat["data"]["list"];
+      console.log(arr);
+      console.log("data_1", arr.length);
+      add_story();
+    });
+  };
 
   var indents = [];
   useEffect(() => {
-    indents = [];
-    const pullStatus = () => {
-      getStatus().then((dat) => {
-        arr = [];
-        arr = dat["data"]["list"];
-        console.log(arr);
-        console.log("data", arr.length);
-        add_status(arr);
-      });
-    };
-
-    const pullStory = () => {
-      getStory().then((dat) => {
-        arr = [];
-        arr = dat["data"]["list"];
-        console.log(arr);
-        console.log("data_1", arr.length);
-        add_story();
-      });
-    };
-
+    console.log("hello world");
+    console.log("cookies", Cookies.get("id"));
     setName(Cookies.get("username"));
     setId(Cookies.get("id"));
+    indents = [];
+
     pullStatus();
     pullStory();
 
@@ -151,7 +150,8 @@ function Home() {
 
     indents = [];
     for (var i = arr.length - 1; i >= 0; i--) {
-      if (arr[i]["id"] === id) continue;
+      console.log("id", id);
+      if (arr[i]["id"] === Cookies.get("id")) continue;
       else if (indents.length === 10) break;
       indents.push(
         <Card
@@ -188,7 +188,7 @@ function Home() {
     indents = [];
 
     for (var i = arr.length - 1; i >= 0; i--) {
-      if (arr[i]["id"] === id) continue;
+      if (arr[i]["id"] === Cookies.get("id")) continue;
       else if (indents.length === 10) break;
       const source = "http://127.0.0.1:9000/images/" + arr[i]["objectId"];
       console.log(source);
