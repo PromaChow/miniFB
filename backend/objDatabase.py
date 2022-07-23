@@ -13,14 +13,17 @@ client = Minio("127.0.0.1:9000", access_key, secret_key, secure=False)
 # for bucket in buckets:
 #     print(bucket.name, bucket.creation_date)
     
-# bucket_name = "images"
-# object_name = "test.png"
+
 
 # print(client.fput_object(bucket_name, object_name, "dg.jpg"))
 
-objects = client.list_objects("images")
-for obj in objects:
-    print(obj.object_name)
+# objects = client.list_objects("images")
+# for obj in objects:
+#     print(obj.object_name)
    # print(client.host)
    # print(client.protocol + '//' + client.host + ':' + client.port + '/' + '/' + obj.object_name)
     
+def putObjects(object_name):
+     bucket_name = "images"
+     object_name+=".png"
+     print(client.fput_object(bucket_name, object_name, "output.png"))

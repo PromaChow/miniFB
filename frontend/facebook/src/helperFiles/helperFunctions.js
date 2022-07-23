@@ -103,6 +103,26 @@ export const getStatus = () => {
   return res;
 };
 
+export const getStory = () => {
+  const res = axios
+    .get("http://127.0.0.1:8000/stories")
+    .then((response) => {
+      // alert("yes");
+      // console.log("response", response);
+      // Cookies.set("token", response.data.access_token);
+      // Cookies.set("username", response.data.username);
+      // Cookies.set("id", response.data.id);
+      //  console.log(response);
+      return response;
+      //return response;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
+
+  return res;
+};
+
 export const getBase64 = (file) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();

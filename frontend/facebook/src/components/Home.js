@@ -25,6 +25,7 @@ import {
   getStatus,
   getBase64,
   addStory,
+  getStory,
 } from "../helperFiles/helperFunctions";
 import { FormLabel } from "@mui/material";
 Modal.setAppElement("#root");
@@ -47,6 +48,7 @@ function Home() {
   const [name, setName] = useState("");
   const [ind, setInd] = useState([]);
   const [img, setImg] = useState();
+  const [story, setStory] = useState([]);
   console.log(id);
   console.log(name);
   //console.log(data);
@@ -55,7 +57,7 @@ function Home() {
   }
   const textareaRef = useRef();
   var arr = [];
-
+  var arr_sto = [];
   const handleChange = useCallback((e) => {
     console.log("Changed value to: ", e.target.value);
     setStat(e.target.value);
@@ -75,7 +77,7 @@ function Home() {
     const formData2 = new FormData();
     console.log("hello");
 
-    const data = {
+    const dataa = {
       id: id,
       name: name,
       time: String(Date.now()),
@@ -88,23 +90,28 @@ function Home() {
       .post("http://127.0.0.1:8000/stories", formData2, headers)
       .then(async function (response) {
         console.log(response);
-        await axios
-          .post("http://127.0.0.1:8000/storiesAdditional", data)
-          .then((response) => {
-            // alert("yes");
-            // console.log("response", response);
-            // Cookies.set("token", response.data.access_token);
-            // Cookies.set("username", response.data.username);
-            // Cookies.set("id", response.data.id);
-
-            console.log(response);
-          })
-          .catch((error) => {
-            console.log(error.message);
-          });
       })
       .catch(function (response) {
         console.log(response);
+      });
+
+    await axios
+      .post("http://127.0.0.1:8000/storiesAdditional", {
+        id: id,
+        name: name,
+        time: String(Date.now()),
+      })
+      .then((response) => {
+        // alert("yes");
+        // console.log("response", response);
+        // Cookies.set("token", response.data.access_token);
+        // Cookies.set("username", response.data.username);
+        // Cookies.set("id", response.data.id);
+
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error.message);
       });
   }, []);
 
@@ -120,9 +127,21 @@ function Home() {
         add_status(arr);
       });
     };
+
+    const pullStory = () => {
+      getStory().then((dat) => {
+        arr = [];
+        arr = dat["data"]["list"];
+        console.log(arr);
+        console.log("data_1", arr.length);
+        add_story();
+      });
+    };
+
     setName(Cookies.get("username"));
     setId(Cookies.get("id"));
     pullStatus();
+    pullStory();
 
     //console.log(getStatus());
   }, []);
@@ -159,6 +178,41 @@ function Home() {
     }
     console.log("indents", indents.length, arr.length);
     setInd(indents);
+  };
+
+  const add_story = () => {
+    console.log(arr.length);
+    indents = [];
+
+    for (var i = 0; i < arr.length; i++) {
+      const source = "http://127.0.0.1:9000/images/" + arr[i]["objectId"];
+      console.log(source);
+      indents.push(
+        <article
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <img
+            src={source}
+            alt="new"
+            style={{
+              borderRadius: "99px",
+              height: "80px",
+              width: "80px",
+              margin: "10px",
+            }}
+          />
+          <p style={{ color: "#FFFFFF", justifySelf: "center" }}>
+            {arr[i]["name"]}
+          </p>
+        </article>
+      );
+    }
+    console.log("indents", indents.length, arr.length);
+    setStory(indents);
   };
 
   return (
@@ -231,17 +285,7 @@ function Home() {
 
           <input id="file-input" type="file" onChange={onImageChange} />
         </form>
-
-        <img
-          src="http://127.0.0.1:9000/images/test.png"
-          alt="new"
-          style={{
-            borderRadius: "99px",
-            height: "80px",
-            width: "80px",
-            margin: "10px",
-          }}
-        />
+        {story}
       </div>
       <div
         style={{

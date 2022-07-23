@@ -33,8 +33,9 @@ try:
     db = client['facebookDB']
     coll = db["Users"]
     stat_col = db["Status"]
-    #document = {"id": "1234", "name": "system" , "time": "1657405086", "text":"hello" }
-    #stat_col.insert_one(document)
+    story_col = db["Story"]
+    # document = {"id": "1234", "name": "system" , "time": "1657405086", "objectId":"hello" }
+    # story_col.insert_one(document)
     # print(db)
 except Exception:
     print("Unable to connect to the server.")
@@ -108,7 +109,7 @@ async def post_story(filesss : UploadFile = File(...)):
     #print(stat_obj)
     #img_data = stat_obj["file"]
     contents = await filesss.read()
-    print(contents);
+    #print(contents);
     with open('output.png', 'wb') as f:
             print("hello")
             f.write(contents)
@@ -120,6 +121,11 @@ def post_storyy(data: Story):
    
    # os.remove("hello.png") 
     print(data.id);
+    object_id = uuid.uuid4();
+    objDatabase.putObjects(str(object_id));
+    story_obj = dict(data);
+    story_obj["objectId"] = str(object_id);
+    story_col.insert_one(story_obj);
     #print(img_data)
     # with open("imageToSave.png", "wb") as fh:
     #     fh.write(base64.decodebytes(img_data))
@@ -129,6 +135,23 @@ def post_storyy(data: Story):
     
     
     return {"filename": "hello"}
+
+
+@app.get("/stories")
+async def get_story():
+    cursor = story_col.find({})
+    list = []
+    for document in cursor:
+          dic = {}
+          dic["id"] = document["id"]
+          dic["name"] = document["name"]
+          dic["time"] = document["time"]
+          dic["objectId"]= document["objectId"]+".png"
+          
+          list.insert(len(list),dic)
+          
+    print(list)
+    return {"list":list}
     
 
 @app.get("/")
