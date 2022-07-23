@@ -148,8 +148,9 @@ function Home() {
 
   const add_status = () => {
     console.log(arr.length);
+
     indents = [];
-    for (var i = 0; i < arr.length; i++) {
+    for (var i = arr.length - 1; i >= 0; i--) {
       if (arr[i]["id"] === id) continue;
       else if (indents.length === 10) break;
       indents.push(
@@ -186,7 +187,7 @@ function Home() {
     console.log(arr.length);
     indents = [];
 
-    for (var i = 0; i < arr.length; i++) {
+    for (var i = arr.length - 1; i >= 0; i--) {
       if (arr[i]["id"] === id) continue;
       else if (indents.length === 10) break;
       const source = "http://127.0.0.1:9000/images/" + arr[i]["objectId"];
@@ -302,7 +303,7 @@ function Home() {
 
           overflowY: "scroll",
           float: "left",
-          height: "760px",
+          height: "610px",
           position: "relative",
           flexGrow: 1,
         }}

@@ -81,6 +81,7 @@ def login(request:Login):
 @app.get("/status")
 async def get_status():
     cursor = stat_col.find({})
+    print(cursor)
     list = []
     for document in cursor:
           dic = {}
