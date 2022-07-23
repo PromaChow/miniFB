@@ -45,7 +45,6 @@ function Home() {
   const [stat, setStat] = useState("");
   const [id, setId] = useState();
   const [name, setName] = useState("");
-  const [data, setData] = useState([]);
   const [ind, setInd] = useState([]);
   const [img, setImg] = useState();
   console.log(id);
@@ -75,14 +74,34 @@ function Home() {
     console.log(e.target.files[0].name);
     const formData2 = new FormData();
     console.log("hello");
+
+    const data = {
+      id: id,
+      name: name,
+      time: String(Date.now()),
+    };
     // console.log("img", img.name);
     formData2.append("filesss", e.target.files[0]);
 
     const headers = { "Content-Type": e.target.files[0].type };
     await axios
       .post("http://127.0.0.1:8000/stories", formData2, headers)
-      .then(function (response) {
+      .then(async function (response) {
         console.log(response);
+        await axios
+          .post("http://127.0.0.1:8000/storiesAdditional", data)
+          .then((response) => {
+            // alert("yes");
+            // console.log("response", response);
+            // Cookies.set("token", response.data.access_token);
+            // Cookies.set("username", response.data.username);
+            // Cookies.set("id", response.data.id);
+
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
       })
       .catch(function (response) {
         console.log(response);

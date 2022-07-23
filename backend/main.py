@@ -103,7 +103,7 @@ def post_status(request : Status):
 
 
 @app.post("/stories")
-async def post_story(id:str, filesss : UploadFile = File(...)):
+async def post_story(filesss : UploadFile = File(...)):
    # stat_obj = dict(request)
     #print(stat_obj)
     #img_data = stat_obj["file"]
@@ -114,8 +114,12 @@ async def post_story(id:str, filesss : UploadFile = File(...)):
             f.write(contents)
     
     print(filesss.filename);
-   # os.remove("hello.png") 
     
+@app.post("/storiesAdditional")
+def post_storyy(data: Story):
+   
+   # os.remove("hello.png") 
+    print(data.id);
     #print(img_data)
     # with open("imageToSave.png", "wb") as fh:
     #     fh.write(base64.decodebytes(img_data))
@@ -124,7 +128,7 @@ async def post_story(id:str, filesss : UploadFile = File(...)):
     #     shutil.copyfileobj(image.file, buffer)
     
     
-    return {"filename": filesss.filename}
+    return {"filename": "hello"}
     
 
 @app.get("/")

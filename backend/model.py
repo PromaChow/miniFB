@@ -36,4 +36,4 @@ class Story(BaseModel):
     id: str
     name : str
     time : str
-    file : UploadFile= File(...)
+    
