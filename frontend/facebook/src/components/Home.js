@@ -150,6 +150,8 @@ function Home() {
     console.log(arr.length);
     indents = [];
     for (var i = 0; i < arr.length; i++) {
+      if (arr[i]["id"] === id) continue;
+      else if (indents.length === 10) break;
       indents.push(
         <Card
           style={{
@@ -185,6 +187,8 @@ function Home() {
     indents = [];
 
     for (var i = 0; i < arr.length; i++) {
+      if (arr[i]["id"] === id) continue;
+      else if (indents.length === 10) break;
       const source = "http://127.0.0.1:9000/images/" + arr[i]["objectId"];
       console.log(source);
       indents.push(
