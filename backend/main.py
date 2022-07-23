@@ -103,7 +103,7 @@ def post_status(request : Status):
 
 
 @app.post("/stories")
-async def post_story(filesss : UploadFile = File(...)):
+async def post_story(id:str, filesss : UploadFile = File(...)):
    # stat_obj = dict(request)
     #print(stat_obj)
     #img_data = stat_obj["file"]

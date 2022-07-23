@@ -13,6 +13,7 @@ python-jose = "*"
 cryptography = "*"
 openpyxl = "*"
 python-multipart = "*"
+opencv-python = "*"
 
 [dev-packages]
 
