@@ -17,6 +17,7 @@ const Authentication = React.memo(({ dummy }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [cookies, setCookies] = useState(false);
+  const [username, setUsername] = useState("");
   //console.log(dummy);
 
   //   const reg_email = useRef("");
@@ -41,6 +42,13 @@ const Authentication = React.memo(({ dummy }) => {
       setRegPassword(e.target.value);
     },
     [reg_password]
+  );
+
+  const onChangeUsername = useCallback(
+    (e) => {
+      setUsername(e.target.value);
+    },
+    [username]
   );
 
   useEffect(() => {
@@ -122,6 +130,7 @@ const Authentication = React.memo(({ dummy }) => {
   const onRegister = (evt) => {
     evt.preventDefault();
     const data = {
+      username: username,
       email: reg_email,
       password: reg_password,
     };
@@ -192,6 +201,14 @@ const Authentication = React.memo(({ dummy }) => {
           </div>
           <div class="register-show">
             <h2>REGISTER</h2>
+
+            <input
+              type="text"
+              placeholder="Username"
+              onChange={(e) => {
+                onChangeUsername(e);
+              }}
+            />
             <input
               type="text"
               placeholder="Email"

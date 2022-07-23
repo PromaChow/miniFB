@@ -84,6 +84,16 @@ function Home() {
     formData2.append("filesss", e.target.files[0]);
 
     const headers = { "Content-Type": e.target.files[0].type };
+
+    await axios
+      .post("http://127.0.0.1:8000/stories", formData2, headers)
+      .then(async function (response) {
+        console.log(response);
+      })
+      .catch(function (response) {
+        console.log(response);
+      });
+
     await axios
       .post("http://127.0.0.1:8000/storiesAdditional", {
         id: Cookies.get("id"),
@@ -101,15 +111,6 @@ function Home() {
       })
       .catch((error) => {
         console.log(error.message);
-      });
-
-    await axios
-      .post("http://127.0.0.1:8000/stories", formData2, headers)
-      .then(async function (response) {
-        console.log(response);
-      })
-      .catch(function (response) {
-        console.log(response);
       });
   }, []);
   const pullStatus = () => {
