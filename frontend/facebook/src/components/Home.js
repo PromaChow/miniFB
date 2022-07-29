@@ -304,7 +304,7 @@ function Home() {
 
           overflowY: "scroll",
           float: "left",
-          height: "610px",
+          height: "590px",
           position: "relative",
           flexGrow: 1,
         }}

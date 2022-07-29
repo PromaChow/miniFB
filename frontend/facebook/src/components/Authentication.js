@@ -85,7 +85,6 @@ const Authentication = React.memo(({ dummy }) => {
   }, []);
 
   const onLogin = async (evt) => {
-    console.log("pressed");
     if (evt) {
       evt.preventDefault();
     }
@@ -100,7 +99,7 @@ const Authentication = React.memo(({ dummy }) => {
           password: password,
         })
         .then((response) => {
-          alert("yes");
+          alert("Successful");
           console.log("response", response);
           Cookies.set("token", response.data.access_token);
           Cookies.set("username", response.data.username);
@@ -138,7 +137,7 @@ const Authentication = React.memo(({ dummy }) => {
       .post("http://127.0.0.1:8000/register", data)
       .then((response) => {
         console.log(response);
-        alert(response);
+        alert("Registration Successful");
       })
       .catch((error) => {
         alert(error);
