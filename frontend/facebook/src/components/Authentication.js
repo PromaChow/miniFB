@@ -94,10 +94,7 @@ const Authentication = React.memo(({ dummy }) => {
     };
     const news = async () => {
       let res = await axios
-        .post("http://127.0.0.1:8000/login", {
-          email: email,
-          password: password,
-        })
+        .post("http://127.0.0.1:8000/login", data)
         .then((response) => {
           alert("Successful");
           console.log("response", response);

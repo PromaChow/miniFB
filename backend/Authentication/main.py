@@ -68,17 +68,20 @@ def create_user(request:User):
    return {"res":"created"}
 
 @app.post('/login')
-def login(request:Login):
+async def login(request: Request):
     print("hello")
-    user = coll.find_one({"email":request.email})
-   # print(user.get('_id'))
-    if not user:
-       raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
-    if not Hash.verify(user["password"],request.password):
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
-    access_token = create_access_token(data={"sub": user["email"] })
-    return {"access_token": access_token, "token_type": "bearer", "id": str(user.get('_id')), "username": user["username"]}
-
+    print(request.headers['content-type'])
+    print(await request.json())
+#     print("hello")
+#     user = coll.find_one({"email":request.email})
+#    # print(user.get('_id'))
+#     if not user:
+#        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+#     if not Hash.verify(user["password"],request.password):
+#         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+#     access_token = create_access_token(data={"sub": user["email"] })
+#     return {"access_token": access_token, "token_type": "bearer", "id": str(user.get('_id')), "username": user["username"]}
+    return {"res": "hello"}
 @app.get("/status")
 async def get_status():
     cursor = stat_col.find({})
@@ -106,17 +109,28 @@ def post_status(request : Status):
 
 
 @app.post("/stories")
-async def post_story(filesss : UploadFile = File(...)):
-   # stat_obj = dict(request)
-    #print(stat_obj)
-    #img_data = stat_obj["file"]
-    contents = await filesss.read()
-    #print(contents);
+async def post_story(request: Request):
+    print('hello')
+    data_body = await request.form()
+    data_body = dict(data_body)
+    file = data_body['filesss']
+    print(file)
+    contents = await file.read()
+    print(contents)
     with open('output.png', 'wb') as f:
             print("hello")
             f.write(contents)
     
-    print(filesss.filename);
+   
+    #img_data = stat_obj["file"]
+    #print(img_data)
+    # contents = await filesss.read()
+    # #print(contents);
+    # with open('output.png', 'wb') as f:
+    #         print("hello")
+    #         f.write(contents)
+    
+    # print(filesss.filename);
     
 @app.post("/storiesAdditional")
 def post_storyy(data: Story):
