@@ -15,15 +15,23 @@ def create_access_token(data: dict):
 def verify_token(token:str):
  try:
      print("hello")
-     payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+     
+     payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM],  options=dict(
+                              verify_aud=False,
+                              verify_sub=True,
+                              verify_exp=False,
+                          ))
      email : str = payload.get("sub")
+     print(payload)
      
      if email is None:
          print("none")
      print(email)
      token_data = TokenData(email = email)
+     return email
  except JWTError:
      print("error")
+     return None
  
 
  

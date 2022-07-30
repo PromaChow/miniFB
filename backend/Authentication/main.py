@@ -15,7 +15,7 @@ import jwttoken
 
 app = FastAPI()
 import asyncio
-from model import Story,User,Login, Status
+from model import Story,User,Login, Status, Token
 import objDatabase
 import re
 import pymongo
@@ -55,6 +55,7 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    
 )
 
 @app.post('/register')
@@ -70,22 +71,22 @@ def create_user(request:User):
 @app.post('/login')
 async def login(request: Request):
     print("hello")
-    print(request.headers['content-type'])
-    print(await request.json())
+    data = await request.json();
+    #print(await request.json())
 #     print("hello")
-#     user = coll.find_one({"email":request.email})
-#    # print(user.get('_id'))
-#     if not user:
-#        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
-#     if not Hash.verify(user["password"],request.password):
-#         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
-#     access_token = create_access_token(data={"sub": user["email"] })
-#     return {"access_token": access_token, "token_type": "bearer", "id": str(user.get('_id')), "username": user["username"]}
-    return {"res": "hello"}
+    user = coll.find_one({"email":data["email"]})
+   # print(user.get('_id'))
+    if not user:
+       raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+    if not Hash.verify(user["password"],data["password"]):
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+    access_token = create_access_token(data={"sub": user["email"] })
+    return {"access_token": access_token, "token_type": "bearer", "id": str(user.get('_id')), "username": user["username"]}
+    
 @app.get("/status")
 async def get_status():
     cursor = stat_col.find({})
-    print(cursor)
+    #print(cursor)
     list = []
     for document in cursor:
           dic = {}
@@ -101,12 +102,23 @@ async def get_status():
 
 
 @app.post("/status")
-def post_status(request : Status):
-    stat_obj = dict(request)
-    stat_col.insert_one(stat_obj)
+async def post_status(request : Request):
+    print("toknen",request.headers['authorization'])
+    if(verify_token(request.headers['authorization'])):
+        print("yes")
+        stat_obj = dict(await request.json())
+        print(stat_col.insert_one(stat_obj))
+        
+        return {"res" : "success"}
     
-    return {"res" : "success"}
 
+
+@app.get("/check")
+async def check_validity(request:Request):
+    
+    data = dict(request.headers)
+    email = verify_token(data['authorization'])
+    return {"res": email}
 
 @app.post("/stories")
 async def post_story(request: Request):
@@ -166,7 +178,7 @@ async def get_story():
           
           list.insert(len(list),dic)
           
-    print(list)
+   # print(list)
     return {"list":list}
     
 

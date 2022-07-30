@@ -9,6 +9,10 @@ class User(BaseModel):
     username: str
     email: str
     password: str
+    
+
+class token(BaseModel):
+    token : str
 
 
 class Login(BaseModel):

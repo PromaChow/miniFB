@@ -33,7 +33,7 @@ export const format_time = (time) => {
   return res;
 };
 
-export const addStatus = async (id, name, time, stat) => {
+export const addStatus = async (id, name, time, stat, token) => {
   //status.splice(status.length, 0, stat);
 
   const data = {
@@ -42,8 +42,11 @@ export const addStatus = async (id, name, time, stat) => {
     time: time,
     text: stat,
   };
+
   let res = await axios
-    .post("http://127.0.0.1:8000/status", data)
+    .post("http://127.0.0.1:2000/status", data, {
+      headers: { Authorization: token },
+    })
     .then((response) => {
       // alert("yes");
       // console.log("response", response);
@@ -83,9 +86,9 @@ export const addStory = async (id, name, time, form) => {
     });
 };
 
-export const getStatus = () => {
+export const getStatus = (token) => {
   const res = axios
-    .get("http://127.0.0.1:8000/status")
+    .get("http://127.0.0.1:2000/status", { headers: { Authorization: token } })
     .then((response) => {
       // alert("yes");
       // console.log("response", response);

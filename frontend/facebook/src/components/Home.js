@@ -83,7 +83,10 @@ function Home() {
     // console.log("img", img.name);
     formData2.append("filesss", e.target.files[0]);
 
-    const headers = { "Content-Type": e.target.files[0].type };
+    const headers = {
+      "Content-Type": e.target.files[0].type,
+      Authorization: String(Cookies.get("token")),
+    };
 
     await axios
       .post("http://127.0.0.1:8000/stories", formData2, headers)
@@ -114,7 +117,7 @@ function Home() {
       });
   }, []);
   const pullStatus = () => {
-    getStatus().then((dat) => {
+    getStatus(Cookies.get("token")).then((dat) => {
       arr = [];
       arr = dat["data"]["list"];
       console.log(arr);
@@ -266,7 +269,7 @@ function Home() {
         <button
           class="button-style"
           onClick={() => {
-            addStatus(id, name, String(Date.now()), stat);
+            addStatus(id, name, String(Date.now()), stat, Cookies.get("token"));
             window.location.reload();
           }}
         >
