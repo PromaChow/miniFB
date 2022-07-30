@@ -112,7 +112,7 @@ function Home() {
     });
   };
   const pullStory = () => {
-    getStory().then((dat) => {
+    getStory(String(Cookies.get("token"))).then((dat) => {
       arr = [];
       arr = dat["data"]["list"];
       console.log(arr);

@@ -106,9 +106,9 @@ export const getStatus = (token) => {
   return res;
 };
 
-export const getStory = () => {
+export const getStory = (token) => {
   const res = axios
-    .get("http://127.0.0.1:8000/stories")
+    .get("http://127.0.0.1:5000/stories", { headers: { Authorization: token } })
     .then((response) => {
       // alert("yes");
       // console.log("response", response);
