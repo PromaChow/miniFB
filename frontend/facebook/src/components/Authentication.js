@@ -98,9 +98,18 @@ const Authentication = React.memo(({ dummy }) => {
         .then((response) => {
           alert("Successful");
           console.log("response", response);
-          Cookies.set("token", response.data.access_token);
-          Cookies.set("username", response.data.username);
-          Cookies.set("id", response.data.id);
+          var inFifteenMinutes = new Date(
+            new Date().getTime() + 30 * 60 * 1000
+          );
+          Cookies.set("token", response.data.access_token, {
+            expires: inFifteenMinutes,
+          });
+          Cookies.set("username", response.data.username, {
+            expires: inFifteenMinutes,
+          });
+          Cookies.set("id", response.data.id, {
+            expires: inFifteenMinutes,
+          });
 
           return response;
         })

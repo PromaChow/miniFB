@@ -53,21 +53,12 @@ function Home() {
   function toggleModal() {
     setIsOpen(!isOpen);
   }
-  const textareaRef = useRef();
   var arr = [];
-  var arr_sto = [];
+
   const handleChange = useCallback((e) => {
     console.log("Changed value to: ", e.target.value);
     setStat(e.target.value);
   }, []);
-
-  const toBase64 = (file) =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
 
   const onImageChange = useCallback(async (e) => {
     setImg(e.target.files[0]);
@@ -123,6 +114,7 @@ function Home() {
 
   var indents = [];
   useEffect(() => {
+    console.log("doc", document.cookie);
     console.log("hello world");
     console.log("cookies", Cookies.get("id"));
     setName(Cookies.get("username"));

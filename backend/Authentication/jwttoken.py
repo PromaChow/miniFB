@@ -19,7 +19,7 @@ def verify_token(token:str):
      payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM],  options=dict(
                               verify_aud=False,
                               verify_sub=True,
-                              verify_exp=False,
+                              verify_exp=True,
                           ))
      email : str = payload.get("sub")
      print(payload)
