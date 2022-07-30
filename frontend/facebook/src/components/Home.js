@@ -89,7 +89,7 @@ function Home() {
     };
 
     await axios
-      .post("http://127.0.0.1:5000/stories", formData2, {
+      .post("http://127.0.0.1:80/stories", formData2, {
         headers: {
           Authorization: String(Cookies.get("token")),
           "Content-Type": e.target.files[0].type,
@@ -131,8 +131,6 @@ function Home() {
 
     pullStatus();
     pullStory();
-
-    //console.log(getStatus());
   }, []);
 
   const add_status = () => {
@@ -256,7 +254,7 @@ function Home() {
           class="button-style"
           onClick={() => {
             addStatus(id, name, String(Date.now()), stat, Cookies.get("token"));
-            window.location.reload();
+            // window.location.reload();
           }}
         >
           POST

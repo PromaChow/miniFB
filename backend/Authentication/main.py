@@ -115,7 +115,7 @@ async def post_status(request : Request):
 
 @app.get("/check")
 async def check_validity(request:Request):
-    
+    print("working")
     data = dict(request.headers)
     email = verify_token(data['authorization'])
     user = coll.find_one({"email":email})

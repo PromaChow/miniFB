@@ -44,7 +44,7 @@ export const addStatus = async (id, name, time, stat, token) => {
   };
 
   let res = await axios
-    .post("http://127.0.0.1:2000/status", data, {
+    .post("http://127.0.0.1:80/status", data, {
       headers: { Authorization: token },
     })
     .then((response) => {
@@ -71,7 +71,7 @@ export const addStory = async (id, name, time, form) => {
     file: form,
   };
   let res = await axios
-    .post("http://127.0.0.1:8000/stories", form)
+    .post("http://127.0.0.1:80/stories", form)
     .then((response) => {
       // alert("yes");
       // console.log("response", response);
@@ -88,14 +88,8 @@ export const addStory = async (id, name, time, form) => {
 
 export const getStatus = (token) => {
   const res = axios
-    .get("http://127.0.0.1:2000/status", { headers: { Authorization: token } })
+    .get("http://127.0.0.1:80/status", { headers: { Authorization: token } })
     .then((response) => {
-      // alert("yes");
-      // console.log("response", response);
-      // Cookies.set("token", response.data.access_token);
-      // Cookies.set("username", response.data.username);
-      // Cookies.set("id", response.data.id);
-      //  console.log(response);
       return response;
       //return response;
     })
@@ -108,7 +102,7 @@ export const getStatus = (token) => {
 
 export const getStory = (token) => {
   const res = axios
-    .get("http://127.0.0.1:5000/stories", { headers: { Authorization: token } })
+    .get("http://127.0.0.1:80/stories", { headers: { Authorization: token } })
     .then((response) => {
       // alert("yes");
       // console.log("response", response);
