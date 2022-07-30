@@ -254,7 +254,7 @@ function Home() {
           class="button-style"
           onClick={() => {
             addStatus(id, name, String(Date.now()), stat, Cookies.get("token"));
-            // window.location.reload();
+            //window.location.reload();
           }}
         >
           POST
