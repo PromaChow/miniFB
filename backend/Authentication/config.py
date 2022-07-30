@@ -1,10 +1,10 @@
 from pydantic import BaseSettings
 
 
+
 class Settings(BaseSettings):
-    app_name: str = "Awesome API"
-    admin_email: str
-    items_per_user: int = 50
+    conn_str : str = "mongodb://localhost:27017"
+    timeout : int = 5000
 
 
 settings = Settings()
