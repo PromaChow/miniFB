@@ -118,7 +118,8 @@ async def check_validity(request:Request):
     
     data = dict(request.headers)
     email = verify_token(data['authorization'])
-    return {"res": email}
+    user = coll.find_one({"email":email})
+    return {"email": email, "username":user["username"], "id": str(user.get('_id'))}
 
 @app.post("/stories")
 async def post_story(request: Request):

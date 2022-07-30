@@ -85,35 +85,21 @@ function Home() {
 
     const headers = {
       "Content-Type": e.target.files[0].type,
-      Authorization: String(Cookies.get("token")),
+      authorization: String(Cookies.get("token")),
     };
 
     await axios
-      .post("http://127.0.0.1:8000/stories", formData2, headers)
+      .post("http://127.0.0.1:5000/stories", formData2, {
+        headers: {
+          Authorization: String(Cookies.get("token")),
+          "Content-Type": e.target.files[0].type,
+        },
+      })
       .then(async function (response) {
         console.log(response);
       })
       .catch(function (response) {
         console.log(response);
-      });
-
-    await axios
-      .post("http://127.0.0.1:8000/storiesAdditional", {
-        id: Cookies.get("id"),
-        name: Cookies.get("username"),
-        time: String(Date.now()),
-      })
-      .then((response) => {
-        // alert("yes");
-        // console.log("response", response);
-        // Cookies.set("token", response.data.access_token);
-        // Cookies.set("username", response.data.username);
-        // Cookies.set("id", response.data.id);
-
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error.message);
       });
   }, []);
   const pullStatus = () => {
