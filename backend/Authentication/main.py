@@ -1,4 +1,3 @@
-from pydoc import cli
 from fastapi import FastAPI, HTTPException,Request,status
 from fastapi.middleware.cors import CORSMiddleware
 from hash import Hash
@@ -19,14 +18,14 @@ origins = [
 ]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=['*'],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
     
 )
 
-@app.post('/register')
+@app.post('/auth/register')
 def create_user(request:User):
    user = database.coll.find_one({"email":request.email})
    if user : return{"res":"email exists"}    
@@ -36,7 +35,7 @@ def create_user(request:User):
    user_id = database.coll.insert_one(user_object)
    return {"res":"created"}
 
-@app.post('/login')
+@app.post('/auth/login')
 async def login(request: Request):
     print("hello")
     data = await request.json();
@@ -53,7 +52,7 @@ async def login(request: Request):
     
 
 
-@app.get("/check")
+@app.get("/auth/check")
 async def check_validity(request:Request):
     print("working")
     data = dict(request.headers)

@@ -1,0 +1,11 @@
+fastapi
+fastapi[all]
+uvicorn[standard]
+pydantic
+pymongo
+passlib
+jose
+python-jose
+typing
+
+

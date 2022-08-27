@@ -4,7 +4,7 @@ import config
 
 client = pymongo.MongoClient(config.settings.conn_str, serverSelectionTimeoutMS=config.settings.timeout)
 try:
-    db = client['facebookDB']
+    db = client['facebookDBUser']
     coll = db["Users"]
 
 except Exception:
