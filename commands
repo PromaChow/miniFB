@@ -1,0 +1,4 @@
+sudo service apache2 stop
+sudo systemctl restart nginx.service
+uvicorn main:app --reload --host=127.0.0.1 --port=8000  
+sudo ./minio server /minio 
