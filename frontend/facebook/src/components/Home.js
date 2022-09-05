@@ -81,7 +81,7 @@ function Home() {
     };
 
     await axios
-      .post("http://127.0.0.1:80/stories", formData2, {
+      .post("http://127.0.0.1:8080/stories", formData2, {
         headers: {
           Authorization: String(Cookies.get("token")),
           "Content-Type": e.target.files[0].type,

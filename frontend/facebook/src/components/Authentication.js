@@ -94,7 +94,7 @@ const Authentication = React.memo(({ dummy }) => {
     };
     const news = async () => {
       let res = await axios
-        .post("http://127.0.0.1:80/auth/login", data)
+        .post("http://127.0.0.1:8080/auth/login", data)
         .then((response) => {
           alert("Successful");
           console.log("response", response);
@@ -140,7 +140,7 @@ const Authentication = React.memo(({ dummy }) => {
       password: reg_password,
     };
     axios
-      .post("http://127.0.0.1:80/auth/register", data)
+      .post("http://127.0.0.1:8080/auth/register", data)
       .then((response) => {
         console.log(response);
         alert("Registration Successful");
