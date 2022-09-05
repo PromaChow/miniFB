@@ -1,6 +1,13 @@
 version: '3'
 
 services:
+  facebook:
+    build: ./frontend
+    container_name: facebook
+    ports :
+      - '3000:3000'
+    stdin_open : true
+    tty : true
   nginx:
     image: nginx
     restart: always
