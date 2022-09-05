@@ -27,7 +27,10 @@ app.add_middleware(
 
 @app.post('/auth/register')
 def create_user(request:User):
+   print("hello")
+   print(database.coll.find())
    user = database.coll.find_one({"email":request.email})
+   print(user)
    if user : return{"res":"email exists"}    
    hashed_pass = Hash.bcrypt(request.password)
    user_object = dict(request)

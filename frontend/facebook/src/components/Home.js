@@ -49,6 +49,7 @@ function Home() {
   const [ind, setInd] = useState([]);
   const [img, setImg] = useState();
   const [story, setStory] = useState([]);
+  const image = "";
   //console.log(data);
   function toggleModal() {
     setIsOpen(!isOpen);
@@ -166,12 +167,14 @@ function Home() {
   const add_story = () => {
     console.log(arr.length);
     indents = [];
-
+    console.log("inside");
     for (var i = arr.length - 1; i >= 0; i--) {
+      console.log("h");
       if (arr[i]["id"] === Cookies.get("id")) continue;
       else if (indents.length === 10) break;
-      const source = "http://127.0.0.1:9000/images/" + arr[i]["objectId"];
-      console.log(source);
+      console.log(arr);
+      const source = arr[i]["img"];
+
       indents.push(
         <article
           style={{
@@ -181,7 +184,7 @@ function Home() {
           }}
         >
           <img
-            src={source}
+            src={`data:image/png;base64,${source}`}
             alt="new"
             style={{
               borderRadius: "99px",

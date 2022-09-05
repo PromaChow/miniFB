@@ -10,5 +10,7 @@ try:
 except Exception:
     print("Unable to connect to the server.")
 
-
+print("database")
 print(client.list_database_names())
+
+

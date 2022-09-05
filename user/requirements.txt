@@ -7,5 +7,7 @@ passlib
 jose
 python-jose
 typing
+Cmake
+
 
 
