@@ -1,0 +1,20 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+fastapi = {extras = ["all"], version = "*"}
+uvicorn = {extras = ["standard"], version = "*"}
+pydantic = "*"
+pymongo = "*"
+passlib = "*"
+jose = "*"
+python-jose = "*"
+typing = "*"
+cmake = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"

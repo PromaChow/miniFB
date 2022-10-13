@@ -1,0 +1,21 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+typefit = {extras = ["api"], version = "*"}
+fastapi = {extras = ["all"], version = "*"}
+uvicorn = {extras = ["standard"], version = "*"}
+httpx = "*"
+pymongo = "*"
+minio = "*"
+pandas = "*"
+jose = "*"
+python-jose = "*"
+requests = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"

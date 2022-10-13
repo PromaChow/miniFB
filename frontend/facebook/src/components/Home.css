@@ -1,0 +1,189 @@
+.topnav {
+    background-color: #18031e;
+    overflow: hidden;
+    width:100%;
+    display:flex;
+justify-content:space-between;
+    
+  }
+  
+  /* Style the links inside the navigation bar */
+  .topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  /* Change the color of links on hover */
+  .topnav a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  /* Add a color to the active/current link */
+  .topnav a.active {
+    background-color: #c884dc;
+    color: white;
+    align-self: flex-start;
+  }
+
+  .center {
+    
+    margin:auto;
+    margin-top: 50px;
+    
+    border: 2px solid transparent;
+    padding-right: 300px;
+    padding-left: 300px;
+    
+    border-radius: 20px;
+    display: flex;
+    justify-self: center;
+    align-self: center;
+    text-align: center;
+    font-size: 20px;
+    
+  }
+
+  .div-center {
+    margin: auto;
+    margin-top: 10px;
+    border: 0.001px solid rgb(134, 136, 134);
+    background-color: #312b32;
+    border-radius: 10px;
+    opacity: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    box-shadow: #18031e;
+       
+    
+  }
+  .div-center_2 {
+    margin: auto;
+    margin-top: 10px;
+    border: 0.001px solid rgb(134, 136, 134);
+    background-color: #312b32;
+    border-radius: 10px;
+    opacity: 1;
+    width: "900px";
+    display: flex;
+    flex-direction: column;
+    box-shadow: #18031e;
+    overflow-x: scroll;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+       
+    
+  }
+
+  .image-upload > input
+{
+    display: none;
+    border-radius: "95px";
+    height: "90px";
+    width: "100px";
+}
+  .button-style{
+      width:10%;
+      
+      align-self: flex-end; 
+      background-color: #c884dc;
+      border-radius: 10px;
+      border-color: #dcaceb;
+      margin-bottom: 10px;
+      margin-right: 10px;
+      height:40px;
+      color:white;
+      text-align: center;
+      padding: 0px;
+      vertical-align:middle
+
+  }
+
+.modal-center{
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+}
+
+.card-style{
+    width: "100%";
+    border-top: "9px solid black";
+    border-radius: "30px";
+    margin-top: "10px";
+}
+
+.logout-but{
+    
+    background-color: #978b9b;
+    color: white;
+    align-self: flex-end;
+    border-radius: 10px;
+    border-color: #ddd;
+    
+}
+
+
+* {
+    padding: 0;
+    margin: 0;
+  }
+  
+  .navbar-wrapper {
+    display: flex;
+    flex-direction: row; /*or space-between*/
+    align-items: center;
+    width: 100%;
+    padding: 20px 0;
+  }
+
+  .left-navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: flex-start;
+  }
+  
+  .links {
+    align-content: center;
+    display: flex;
+    justify-content: space-evenly;
+  }
+  
+  .links a {
+    margin-right: 10px;
+  }
+
+
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* The container's content you want to add an overflow to */
+  .container .scrollable-content {
+    flex-grow: 1;  
+    overflow: auto;
+  }
+
+  .article {
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    display: grid;
+    place-items: center;
+}
+
+.header {
+    font-size: 80px;
+    color: white;
+    text-align: center;
+}

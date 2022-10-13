@@ -1,0 +1,9 @@
+fastapi[all]
+uvicorn[standard]
+httpx
+minio 
+jose
+requests 
+pymongo
+pydantic
+Cmake
